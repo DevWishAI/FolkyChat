@@ -63,7 +63,6 @@ def get_word_embedding(word):
 
     return word_embedding
 
-# Folky's memory class
 class FolkyMemory:
     def __init__(self, database_path="Knowledge.pkl"):
         self.database_path = database_path
@@ -79,6 +78,17 @@ class FolkyMemory:
     def save_knowledge(self):
         with open(self.database_path, 'wb') as f:
             pickle.dump(self.knowledge, f)
+
+    def add_life_experience(self, experience):
+        self.knowledge.setdefault('life_experiences', []).append(experience)
+        self.save_knowledge()
+
+    def get_random_life_experience(self):
+        life_experiences = self.knowledge.get('life_experiences', [])
+        if life_experiences:
+            return random.choice(life_experiences)
+        else:
+            return "Desculpa, não tenho experiências de vida para compartilhar no momento."
 
 # Advanced neural network class for Folky AI
 class AdvancedNeuralNetwork(nn.Module):
